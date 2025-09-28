@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Circle, Polygon
 
 RADIUS = 5#The radius length of the fixed circle
+
 #Create a capsule graphic
 def capsule(ax,x_initial,y_initial,x_end,y_end):
     circle_kwargs = dict(edgecolor='crimson', lw=2, fill=False)
@@ -14,6 +15,7 @@ def capsule(ax,x_initial,y_initial,x_end,y_end):
     rect_kwargs = dict(edgecolor='royalblue', lw=2, fill=False)
     ax.add_patch(Circle((x_initial, y_initial), RADIUS, **circle_kwargs))
     ax.add_patch(Circle((x_end, y_end), RADIUS, **circle_kwargs))
+
     # The straight-line distance between two players = A line
     ax.plot([x_initial, x_end], [y_initial, y_end], **line_kwargs)
 
@@ -34,6 +36,7 @@ def capsule(ax,x_initial,y_initial,x_end,y_end):
     corners = [p1_top, p2_top, p2_bot, p1_bot]
     ax.add_patch(Polygon(corners, **rect_kwargs))
     return corners
+
 #Check whether other players are inside the capsule
 def point_in_circle(x,y, center, inclusive=True):
     """Determine whether the point is inside or on the edge of the circle"""
@@ -41,6 +44,7 @@ def point_in_circle(x,y, center, inclusive=True):
     d2 = (x - cx)**2 + (y - cy)**2
     r2 = RADIUS**2
     return d2 <= r2 if inclusive else d2 < r2
+
 def polygon_contains_point( x, y, poly, inclusive=True):
     """Determine whether the point is within the capsule poly."""
     sign = None
@@ -79,13 +83,13 @@ def rectangle_from_two_circles(p1,p2, radius):
     p2_bot = (x2 - nx*radius, y2 - ny*radius)
     return [p1_top, p2_top, p2_bot, p1_bot]
 
-def classify_points(points, p1, p2, radius):
+def classify_points(points, p1, p2):
     """Determine whether each point is within: Circle 1, Circle 2, and Rectangle."""
-    rect = rectangle_from_two_circles(p1, p2, radius)
+    rect = rectangle_from_two_circles(p1, p2, RADIUS)
     results = []
     for pt in points:
-        in_c1 = point_in_circle(pt, p1, radius, inclusive=True)
-        in_c2 = point_in_circle(pt, p2, radius, inclusive=True)
+        in_c1 = point_in_circle(pt, p1, RADIUS, inclusive=True)
+        in_c2 = point_in_circle(pt, p2, RADIUS, inclusive=True)
         in_rect = polygon_contains_point(pt, rect, inclusive=True)
         results.append(dict(point=pt, in_circle1=in_c1, in_circle2=in_c2, in_rect=in_rect))
     return rect, results
