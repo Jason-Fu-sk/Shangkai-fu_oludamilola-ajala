@@ -67,7 +67,7 @@ def polygon_contains_point( x, y, poly, inclusive=True):
             return False
     return True
 
-def rectangle_from_two_circles(p1,p2, radius):
+def rectangle_from_two_circles(p1,p2, RADIUS):
     """It is constructed by two circles (with the same radius): The endpoints of the diameters passing through each circle's center and perpendicular to the common center line → Form the four corners of a rectangle"""
     x1, y1 = p1
     x2, y2 = p2
@@ -77,10 +77,10 @@ def rectangle_from_two_circles(p1,p2, radius):
         raise ValueError("p1 and p2 can not same")
     # The unit normal vector perpendicular to the connecting line (rotated by +90°)
     nx, ny = (-vy / L, vx / L)
-    p1_top = (x1 + nx*radius, y1 + ny*radius)
-    p1_bot = (x1 - nx*radius, y1 - ny*radius)
-    p2_top = (x2 + nx*radius, y2 + ny*radius)
-    p2_bot = (x2 - nx*radius, y2 - ny*radius)
+    p1_top = (x1 + nx*RADIUS, y1 + ny*RADIUS)
+    p1_bot = (x1 - nx*RADIUS, y1 - ny*RADIUS)
+    p2_top = (x2 + nx*RADIUS, y2 + ny*RADIUS)
+    p2_bot = (x2 - nx*RADIUS, y2 - ny*RADIUS)
     return [p1_top, p2_top, p2_bot, p1_bot]
 
 def classify_points(points, p1, p2):
@@ -93,4 +93,3 @@ def classify_points(points, p1, p2):
         in_rect = polygon_contains_point(pt, rect, inclusive=True)
         results.append(dict(point=pt, in_circle1=in_c1, in_circle2=in_c2, in_rect=in_rect))
     return rect, results
-
