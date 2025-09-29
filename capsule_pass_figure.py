@@ -75,6 +75,7 @@ def rectangle_from_two_circles(p1,p2, RADIUS):
     L = math.hypot(vx, vy)
     if L == 0:
         raise ValueError("p1 and p2 can not same")
+
     # The unit normal vector perpendicular to the connecting line (rotated by +90°)
     nx, ny = (-vy / L, vx / L)
     p1_top = (x1 + nx*RADIUS, y1 + ny*RADIUS)
@@ -88,8 +89,9 @@ def classify_points(points, p1, p2):
     rect = rectangle_from_two_circles(p1, p2, RADIUS)
     results = []
     for pt in points:
-        in_c1 = point_in_circle(pt, p1, RADIUS, inclusive=True)
-        in_c2 = point_in_circle(pt, p2, RADIUS, inclusive=True)
-        in_rect = polygon_contains_point(pt, rect, inclusive=True)
+        x,y = pt
+        in_c1 = point_in_circle(x,y, p1, inclusive=True)
+        in_c2 = point_in_circle(x,y, p2, inclusive=True)
+        in_rect = polygon_contains_point(x,y, rect, inclusive=True)
         results.append(dict(point=pt, in_circle1=in_c1, in_circle2=in_c2, in_rect=in_rect))
     return rect, results
