@@ -6,7 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.patches import Circle, Polygon
 
-RADIUS = 5#The radius length of the fixed circle
+RADIUS = 6#The radius length of the fixed circle
 
 #Create a capsule graphic
 def capsule(ax,x_initial,y_initial,x_end,y_end):
